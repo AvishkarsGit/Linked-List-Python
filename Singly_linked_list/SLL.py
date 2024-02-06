@@ -70,22 +70,38 @@ def remove_start(head):
         head = head.next
         del(q)
         return head
-     
+
+def search_node(x,head):
+    p = head
+    flag = 0
+    while p is not None:
+        if x is p.data:
+            flag=1
+            break
+        else:
+            p = p.next
+    if flag == 1:
+        return True
+    else:
+        return False
+
 def remove_middle(x,head):
     p = head
     if head is None:
         print("linked list is empty")
     else:
-        while p is not None:
-            if p.next.data is x:
-                q = p.next
-                p.next = q.next
-                del(q)
-                return head
-            else:
-                p = p.next
-        return None
-        
+        if search_node(x,head) == True:
+            while p is not None:
+                if p.next.data is x:
+                    q = p.next
+                    p.next = q.next
+                    del(q)
+                else:
+                    p = p.next
+        else:
+            print("Node is not found!")
+    return head
+
 
 def remove_end(head):
     p = head
@@ -96,11 +112,32 @@ def remove_end(head):
     del(q)
     return head
 
+def merge_list(head):
+    n = int(input("How much nodes do you want to add in second linked list:"))
+    head2 = create_List(n)
+    p = head
+    while p.next is not None:
+        p = p.next
+    p.next = head2
+    return head
+
+def sort(head):
+    p = head
+    while p.next is not None:
+        q = p.next
+        while q is not None:
+            if p.data > q.data:
+                temp = p.data
+                p.data = q.data
+                q.data = temp
+            q = q.next
+        p = p.next
+    return head
 
 choice = 0
 head = Node()
 
-while choice!=7:
+while choice!=8:
     print("\n\n*** SLL MENUS ***")
     print("1.create List")
     print("2.Display List")
@@ -108,7 +145,8 @@ while choice!=7:
     print("4.Deletion From List")
     print("5.Merge Two Lists")
     print("6.Sort List")
-    print("7.Exit")
+    print("7.Search Node")
+    print("8.Exit")
     choice = int(input("Enter Your Choice:"))
     if choice == 1:
         n = int(input("How much nodes do you wants to add:"))
@@ -153,9 +191,21 @@ while choice!=7:
             head = remove_end(head)
             display_list(head)
     elif choice == 5:
-        print()
+        head = merge_list(head)
+        display_list(head)
     elif choice == 6:
-        print()
+        head = sort(head)
+        display_list(head)
     elif choice == 7:
+        x = int(input("Enter data for search:"))
+        if search_node(x,head) == True:
+            print(" Node is present ate linked list:")
+            display_list(head)
+        else:
+            print("node is not found!")
+
+    elif choice == 8:
         print("Thanks")
+
+        # 10->20->30->11->22->33->none
 
